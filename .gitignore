@@ -1,0 +1,22 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Photoshop files
+*.psd
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# Dependencies (if you add any)
+node_modules/
