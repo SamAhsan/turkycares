@@ -150,6 +150,9 @@ body {
     cursor: pointer;
     transition: var(--transition-smooth);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    display: inline-block;
+    font-family: var(--font-body);
 }
 
 .nav-cta:hover {
@@ -336,10 +339,12 @@ body {
     font-size: 1rem;
     cursor: pointer;
     transition: var(--transition-smooth);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.75rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-family: var(--font-body);
 }
 
 .btn-book-appointment:hover {
@@ -378,6 +383,9 @@ body {
     cursor: pointer;
     transition: var(--transition-smooth);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    display: inline-block;
+    font-family: var(--font-body);
 }
 
 .btn-primary:hover {
@@ -1081,6 +1089,60 @@ body {
     background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
 }
 
+/* Tab Navigation */
+.why-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.why-tab {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-primary);
+}
+
+.why-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.why-tab.active {
+    background: var(--white);
+    color: var(--primary-green);
+    border-color: var(--white);
+}
+
+/* Content Containers */
+.why-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.why-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .flip-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -1089,7 +1151,7 @@ body {
 
 .flip-card {
     width: 100%;
-    height: 600px;
+    height: 700px;
     perspective: 1000px;
     position: relative;
     cursor: pointer;
@@ -1146,10 +1208,29 @@ body {
 
 .flip-card-back {
     background: var(--cream);
-    padding: 4rem;
+    padding: 3rem;
     transform: rotateY(180deg);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+}
+
+.flip-card-back::-webkit-scrollbar {
+    width: 8px;
+}
+
+.flip-card-back::-webkit-scrollbar-track {
+    background: rgba(63, 79, 68, 0.1);
+    border-radius: 10px;
+}
+
+.flip-card-back::-webkit-scrollbar-thumb {
+    background: var(--secondary-green);
+    border-radius: 10px;
+}
+
+.flip-card-back::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-green);
 }
 
 .flip-card:hover .flip-card-front {
@@ -1162,39 +1243,42 @@ body {
 
 .flip-card-back h2 {
     font-family: var(--font-display);
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: var(--primary-green);
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     text-align: center;
 }
 
 .flip-content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
 }
 
 .flip-item {
     display: flex;
-    gap: 1.25rem;
+    gap: 1rem;
+    align-items: flex-start;
 }
 
 .flip-icon {
-    font-size: 2rem;
+    font-size: 1.8rem;
     flex-shrink: 0;
+    margin-top: 0.2rem;
 }
 
 .flip-item h4 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--primary-green);
     margin-bottom: 0.5rem;
+    line-height: 1.4;
 }
 
 .flip-item p {
     font-size: 0.95rem;
     color: var(--gray-dark);
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 .flip-button {
@@ -1219,8 +1303,8 @@ body {
 
 .process-timeline {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
     position: relative;
     margin-bottom: 4rem;
 }
@@ -1261,7 +1345,7 @@ body {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: 0 calc(12.5% - 6px);
+    padding: 0 calc(10% - 6px);
     margin-bottom: 3rem;
     margin-top: 1.5rem;
 }
@@ -1271,7 +1355,7 @@ body {
     height: 12px;
     background: var(--gray-light);
     border-radius: 2px;
-    z-index: 1;
+    z-index: 3;
     transition: var(--transition-smooth);
     position: relative;
 }
@@ -1288,7 +1372,7 @@ body {
     height: 2px;
     background: var(--gray-light);
     transform: translateY(-50%);
-    z-index: 2;
+    z-index: 1;
 }
 
 .process-progress-line {
@@ -1304,8 +1388,8 @@ body {
 
 .process-labels {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
     margin-top: 2.5rem;
 }
 
@@ -1314,7 +1398,7 @@ body {
 }
 
 .process-label h3 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--primary-green);
     margin-bottom: 0.75rem;
@@ -1337,6 +1421,123 @@ body {
 
 .process-content {
     display: none;
+}
+
+/* ========================================
+   FAQ SECTION
+   ======================================== */
+
+.faq-section {
+    padding: 120px 0;
+    background: var(--cream);
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.faq-item {
+    background: var(--primary-green);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-md);
+    background: var(--secondary-green);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 1.75rem 2rem;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
+    transition: var(--transition-smooth);
+}
+
+.faq-question:hover {
+    color: var(--cream);
+}
+
+.faq-question span {
+    flex: 1;
+    padding-right: 1rem;
+}
+
+.faq-icon {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    color: var(--white);
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 2500px;
+    padding: 0 2rem 1.75rem;
+    overflow-y: auto;
+}
+
+.faq-answer p {
+    color: var(--white);
+    line-height: 1.7;
+    font-size: 1rem;
+    margin: 0 0 1rem 0;
+}
+
+.faq-answer p:last-child {
+    margin-bottom: 0;
+}
+
+.faq-answer h4 {
+    color: var(--cream);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 1.5rem 0 0.75rem 0;
+}
+
+.faq-answer h4:first-child {
+    margin-top: 0.5rem;
+}
+
+.faq-answer ul {
+    margin: 0.5rem 0 1rem 0;
+    padding-left: 1.5rem;
+    color: var(--white);
+}
+
+.faq-answer li {
+    margin-bottom: 0.4rem;
+    line-height: 1.6;
+}
+
+.faq-answer em {
+    display: block;
+    color: var(--cream);
+    font-style: italic;
+    margin-top: 0.5rem;
 }
 
 /* ========================================
@@ -1446,6 +1647,7 @@ body {
 .footer-logo img {
     height: 60px;
     width: auto;
+    filter: brightness(0) invert(1);
 }
 
 .footer-logo svg {
@@ -1573,7 +1775,6 @@ body {
 
     .nav-menu {
         position: fixed;
-        left: -100%;
         top: 100px;
         flex-direction: column;
         background: rgba(255, 255, 255, 0.95);
@@ -1581,7 +1782,7 @@ body {
         width: calc(100% - 3rem);
         max-width: 500px;
         left: 50%;
-        transform: translateX(-150%);
+        transform: translateX(calc(-50% - 100vw));
         text-align: center;
         transition: var(--transition-smooth);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -1674,6 +1875,28 @@ body {
         gap: 1.5rem;
         text-align: center;
     }
+
+    /* Why Tabs Tablet */
+    .why-tabs {
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .why-tab {
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
+    }
+
+    /* Process Timeline Tablet */
+    .process-timeline {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .process-labels {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
 }
 
 @media (max-width: 640px) {
@@ -1718,16 +1941,107 @@ body {
         grid-template-columns: 1fr;
     }
 
+    .process-labels {
+        grid-template-columns: 1fr;
+    }
+
     .flip-card {
-        height: 700px;
+        height: 650px;
     }
 
     .flip-card-back {
-        padding: 2.5rem;
+        padding: 2rem;
+    }
+
+    .flip-card-back h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .flip-item {
+        gap: 0.75rem;
+    }
+
+    .flip-item h4 {
+        font-size: 1rem;
+    }
+
+    .flip-item p {
+        font-size: 0.9rem;
     }
 
     .checkup-card {
         min-width: 300px;
+    }
+
+    /* FAQ Section Mobile */
+    .faq-question {
+        padding: 1.25rem 1rem;
+        font-size: 1rem;
+    }
+
+    .faq-answer {
+        font-size: 0.95rem;
+    }
+
+    .faq-item.active .faq-answer {
+        padding: 0 1rem 1.25rem;
+    }
+
+    .faq-answer h4 {
+        font-size: 0.95rem;
+    }
+
+    .faq-answer ul {
+        padding-left: 1.25rem;
+    }
+
+    /* Why Turkey/Izmir Tabs Mobile */
+    .why-tabs {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+    }
+
+    .why-tab {
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    /* Section Padding Mobile */
+    .glance-section,
+    .checkup-section,
+    .longevity-section,
+    .why-section,
+    .experts-section,
+    .process-section,
+    .faq-section,
+    .data-section {
+        padding: 60px 0;
+    }
+
+    /* Hero Section Mobile */
+    .hero-tagline {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .stat-item h3 {
+        font-size: 2rem;
+    }
+
+    .stat-item p {
+        font-size: 0.9rem;
+    }
+
+    /* Process Card Mobile */
+    .process-step-label {
+        font-size: 0.95rem;
+    }
+
+    .process-image img {
+        border-radius: 12px;
     }
 }
 

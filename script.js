@@ -169,6 +169,54 @@ if (cardsTrack && sliderPrev && sliderNext) {
 // FLIP CARD FUNCTIONALITY
 // ========================================
 // Flip card now works on hover (CSS only)
+
+// Tab switching for Why Turkey / Why Izmir
+const whyTabs = document.querySelectorAll('.why-tab');
+const whyContents = document.querySelectorAll('.why-content');
+
+whyTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        const targetTab = tab.getAttribute('data-tab');
+
+        // Remove active class from all tabs and contents
+        whyTabs.forEach(t => t.classList.remove('active'));
+        whyContents.forEach(c => c.classList.remove('active'));
+
+        // Add active class to clicked tab
+        tab.classList.add('active');
+
+        // Show corresponding content
+        const targetContent = document.getElementById(targetTab + 'Content');
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
+    });
+});
+
+// ========================================
+// FAQ ACCORDION FUNCTIONALITY
+// ========================================
+
+const faqItems = document.querySelectorAll('.faq-item');
+
+faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+
+    question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        // Close all FAQ items
+        faqItems.forEach(faqItem => {
+            faqItem.classList.remove('active');
+        });
+
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    });
+});
+
 // ========================================
 // PROCESS TIMELINE SCROLL ANIMATION
 // ========================================
