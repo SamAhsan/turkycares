@@ -2,6 +2,28 @@
 // PROFESSIONAL HEALTHCARE LANDING PAGE JS
 // ========================================
 
+// ========================================
+// HERO WORD ROTATION ANIMATION
+// ========================================
+const changingWord = document.getElementById('changingWord');
+if (changingWord) {
+    const words = ['biomarkers', 'clarity', 'answers', 'peace', 'balance', 'health'];
+    let currentIndex = 0;
+
+    function changeWord() {
+        changingWord.style.opacity = '0';
+
+        setTimeout(() => {
+            currentIndex = (currentIndex + 1) % words.length;
+            changingWord.textContent = words[currentIndex];
+            changingWord.style.opacity = '1';
+        }, 400);
+    }
+
+    // Change word every 2 seconds
+    setInterval(changeWord, 2000);
+}
+
 // Mobile Navigation
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('navMenu');
@@ -168,7 +190,35 @@ if (cardsTrack && sliderPrev && sliderNext) {
 // ========================================
 // FLIP CARD FUNCTIONALITY
 // ========================================
-// Flip card now works on hover (CSS only)
+// Flip card works on hover for desktop
+// Auto-flip on scroll for mobile
+
+// Auto-flip cards on mobile when they come into view
+const flipCards = document.querySelectorAll('.flip-card');
+
+const flipObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && window.innerWidth <= 968) {
+            // Add flipped class after a short delay for staggered effect
+            const delay = Array.from(flipCards).indexOf(entry.target) * 200;
+            setTimeout(() => {
+                entry.target.classList.add('flipped');
+            }, delay);
+
+            // Remove flipped class after 4 seconds to show front again
+            setTimeout(() => {
+                entry.target.classList.remove('flipped');
+            }, delay + 4000);
+        }
+    });
+}, {
+    threshold: 0.3,
+    rootMargin: '0px'
+});
+
+flipCards.forEach(card => {
+    flipObserver.observe(card);
+});
 
 // Tab switching for Why Turkey / Why Izmir
 const whyTabs = document.querySelectorAll('.why-tab');
@@ -213,6 +263,32 @@ faqItems.forEach(item => {
         // Open clicked item if it wasn't active
         if (!isActive) {
             item.classList.add('active');
+        }
+    });
+});
+
+// ========================================
+// TESTS SECTION INTERACTIVE
+// ========================================
+
+const testCatItems = document.querySelectorAll('.test-cat-item');
+const testDetailContents = document.querySelectorAll('.test-detail-content');
+
+testCatItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const category = item.getAttribute('data-category');
+
+        // Remove active class from all items
+        testCatItems.forEach(cat => cat.classList.remove('active'));
+        testDetailContents.forEach(content => content.classList.remove('active'));
+
+        // Add active class to clicked item
+        item.classList.add('active');
+
+        // Show corresponding content
+        const targetContent = document.querySelector(`.test-detail-content[data-category="${category}"]`);
+        if (targetContent) {
+            targetContent.classList.add('active');
         }
     });
 });
