@@ -2720,8 +2720,18 @@ body {
 
     /* Fix card slider on iOS */
     .cards-container {
-        overflow-x: visible;
+        overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
         -webkit-overflow-scrolling: touch;
+    }
+
+    .cards-slider {
+        overflow: visible !important;
+    }
+
+    .checkup-section {
+        overflow: visible !important;
     }
 
     .cards-track {
@@ -2738,6 +2748,13 @@ body {
         transform: translateZ(0);
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
+        margin: 0 10px;
+    }
+
+    /* Ensure proper spacing for cards on iOS */
+    .cards-container {
+        padding: 30px 0 50px !important;
+        margin: 0 -10px;
     }
 
     /* Fix flip card animation on iOS */
