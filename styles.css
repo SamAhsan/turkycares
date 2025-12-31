@@ -2719,11 +2719,18 @@ body {
     }
 
     /* Fix card slider on iOS */
+    .checkup-section .section-container {
+        overflow: visible !important;
+        padding: 0 1rem !important;
+    }
+
     .cards-container {
         overflow: visible !important;
         overflow-x: visible !important;
         overflow-y: visible !important;
         -webkit-overflow-scrolling: touch;
+        width: 100vw !important;
+        margin-left: calc(-50vw + 50%) !important;
     }
 
     .cards-slider {
@@ -2741,6 +2748,7 @@ body {
         -webkit-backface-visibility: hidden;
         perspective: 1000px;
         -webkit-perspective: 1000px;
+        padding: 0 1rem !important;
     }
 
     .checkup-card {
