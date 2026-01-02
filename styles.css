@@ -2757,6 +2757,22 @@ body {
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         margin: 0 10px;
+        height: 550px !important;
+        min-height: 550px !important;
+    }
+
+    .checkup-card img {
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    .card-content {
+        padding: 2rem 1.5rem !important;
+    }
+
+    .card-content p {
+        font-size: 0.9rem !important;
+        line-height: 1.5 !important;
     }
 
     /* Ensure proper spacing for cards on iOS */
