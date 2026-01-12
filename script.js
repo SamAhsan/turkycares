@@ -142,23 +142,29 @@ if (cardsTrack && sliderPrev && sliderNext) {
         const cardWidth = getCardWidth();
         const offset = currentIndex * cardWidth;
 
-        // Force repaint on iOS
-        if (isIOS) {
-            cardsTrack.style.display = 'none';
-            cardsTrack.offsetHeight; // trigger reflow
-            cardsTrack.style.display = 'flex';
-        }
-
         // Use translate3d for better performance
         const transformValue = `translate3d(-${offset}px, 0, 0)`;
-        cardsTrack.style.transform = transformValue;
+
+        // Apply transform with both standard and webkit prefixes
         cardsTrack.style.webkitTransform = transformValue;
+        cardsTrack.style.transform = transformValue;
+
+        // Force hardware acceleration
+        cardsTrack.style.webkitBackfaceVisibility = 'hidden';
+        cardsTrack.style.backfaceVisibility = 'hidden';
 
         // Update button states
         sliderPrev.disabled = currentIndex === 0;
         sliderNext.disabled = currentIndex >= maxIndex;
 
-        console.log('Slider update:', { currentIndex, offset, cardWidth, isIOS });
+        console.log('Slider update:', {
+            currentIndex,
+            offset,
+            cardWidth,
+            isIOS,
+            totalCards,
+            maxIndex
+        });
     }
 
     sliderPrev.addEventListener('click', () => {
@@ -210,16 +216,20 @@ if (cardsTrack && sliderPrev && sliderNext) {
 
     // Update on window resize
     window.addEventListener('resize', () => {
-        updateSlider();
+        setTimeout(updateSlider, 50);
     });
 
-    // Initialize - with small delay for iOS to ensure styles are loaded
-    setTimeout(() => {
+    // Initialize
+    if (isIOS) {
+        // iOS needs multiple initialization attempts
         updateSlider();
-    }, 100);
-
-    // Also initialize immediately for other browsers
-    updateSlider();
+        setTimeout(updateSlider, 100);
+        setTimeout(updateSlider, 300);
+        setTimeout(updateSlider, 500);
+    } else {
+        updateSlider();
+        setTimeout(updateSlider, 100);
+    }
 }
 
 // ========================================

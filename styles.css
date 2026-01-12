@@ -2725,19 +2725,16 @@ body {
     }
 
     .cards-container {
-        overflow: visible !important;
-        overflow-x: visible !important;
-        overflow-y: visible !important;
+        overflow: hidden !important;
         -webkit-overflow-scrolling: touch;
-        width: 100vw !important;
-        margin-left: calc(-50vw + 50%) !important;
+        width: 100% !important;
         padding: 30px 0 50px !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
+        margin: 0 !important;
     }
 
     .cards-slider {
         overflow: visible !important;
+        width: 100% !important;
     }
 
     .checkup-section {
@@ -2749,18 +2746,36 @@ body {
         transform: translate3d(0, 0, 0) !important;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
-        padding: 0 9vw !important;
-        gap: 2rem !important;
+        padding: 0 7vw !important;
+        gap: 1.5rem !important;
         display: flex !important;
-        -webkit-transition: -webkit-transform 0.5s ease-out !important;
-        transition: transform 0.5s ease-out !important;
+        -webkit-transition: -webkit-transform 0.4s ease-out !important;
+        transition: transform 0.4s ease-out !important;
         will-change: transform;
+        flex-wrap: nowrap !important;
     }
 
     /* Make slider arrows visible and functional on iOS */
     .slider-arrow {
-        z-index: 10 !important;
+        z-index: 100 !important;
         pointer-events: auto !important;
+        display: flex !important;
+        position: absolute !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        border-radius: 50% !important;
+        width: 48px !important;
+        height: 48px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .slider-arrow.prev {
+        left: 10px !important;
+    }
+
+    .slider-arrow.next {
+        right: 10px !important;
     }
 
     .checkup-card {
