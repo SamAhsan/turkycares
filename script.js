@@ -117,10 +117,8 @@ if (cardsTrack && sliderPrev && sliderNext) {
         // Get actual card width from DOM for accurate calculation
         if (cards.length > 0) {
             const cardElement = cards[0];
-            const cardStyle = window.getComputedStyle(cardElement);
-            const cardWidth = cardElement.offsetWidth;
-            const gap = parseFloat(cardStyle.marginLeft) + parseFloat(cardStyle.marginRight);
-            // Add gap from cards-track
+            const cardWidth = cardElement.getBoundingClientRect().width;
+            // Get gap from cards-track
             const trackStyle = window.getComputedStyle(cardsTrack);
             const trackGap = parseFloat(trackStyle.gap) || 32;
             return cardWidth + trackGap;
@@ -139,7 +137,10 @@ if (cardsTrack && sliderPrev && sliderNext) {
 
         const cardWidth = getCardWidth();
         const offset = currentIndex * cardWidth;
-        cardsTrack.style.transform = `translateX(-${offset}px)`;
+
+        // Use translate3d for better performance on iOS
+        cardsTrack.style.transform = `translate3d(-${offset}px, 0, 0)`;
+        cardsTrack.style.webkitTransform = `translate3d(-${offset}px, 0, 0)`;
 
         // Update button states
         sliderPrev.disabled = currentIndex === 0;
@@ -198,7 +199,12 @@ if (cardsTrack && sliderPrev && sliderNext) {
         updateSlider();
     });
 
-    // Initialize
+    // Initialize - with small delay for iOS to ensure styles are loaded
+    setTimeout(() => {
+        updateSlider();
+    }, 100);
+
+    // Also initialize immediately for other browsers
     updateSlider();
 }
 

@@ -2745,16 +2745,15 @@ body {
     }
 
     .cards-track {
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0) !important;
+        transform: translate3d(0, 0, 0) !important;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
-        perspective: 1000px;
-        -webkit-perspective: 1000px;
-        padding: 0 5vw !important;
-        gap: 1rem !important;
-        -webkit-transition: -webkit-transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0 9vw !important;
+        gap: 2rem !important;
+        display: flex !important;
+        -webkit-transition: -webkit-transform 0.5s ease-out !important;
+        transition: transform 0.5s ease-out !important;
         will-change: transform;
     }
 
@@ -2769,20 +2768,23 @@ body {
         transform: translateZ(0);
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
-        margin: 0;
-        height: 550px !important;
-        min-height: 550px !important;
-        min-width: 90vw !important;
-        max-width: 90vw !important;
-        width: 90vw !important;
+        margin: 0 !important;
+        height: 480px !important;
+        min-height: 480px !important;
+        min-width: 82vw !important;
+        max-width: 82vw !important;
+        width: 82vw !important;
         border-radius: 20px !important;
+        flex-shrink: 0 !important;
+        overflow: hidden !important;
     }
 
     .checkup-card img {
         height: 100% !important;
         width: 100% !important;
         object-fit: cover !important;
-        object-position: center !important;
+        object-position: center center !important;
+        border-radius: 20px !important;
     }
 
     .card-content {
