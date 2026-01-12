@@ -2731,6 +2731,9 @@ body {
         -webkit-overflow-scrolling: touch;
         width: 100vw !important;
         margin-left: calc(-50vw + 50%) !important;
+        padding: 30px 0 50px !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
     }
 
     .cards-slider {
@@ -2748,7 +2751,17 @@ body {
         -webkit-backface-visibility: hidden;
         perspective: 1000px;
         -webkit-perspective: 1000px;
-        padding: 0 1rem !important;
+        padding: 0 5vw !important;
+        gap: 1rem !important;
+        -webkit-transition: -webkit-transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+    }
+
+    /* Make slider arrows visible and functional on iOS */
+    .slider-arrow {
+        z-index: 10 !important;
+        pointer-events: auto !important;
     }
 
     .checkup-card {
@@ -2756,17 +2769,20 @@ body {
         transform: translateZ(0);
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
-        margin: 0 10px;
+        margin: 0;
         height: 550px !important;
         min-height: 550px !important;
-        min-width: 272px !important;
-        max-width: 272px !important;
-        width: 272px !important;
+        min-width: 90vw !important;
+        max-width: 90vw !important;
+        width: 90vw !important;
+        border-radius: 20px !important;
     }
 
     .checkup-card img {
         height: 100% !important;
+        width: 100% !important;
         object-fit: cover !important;
+        object-position: center !important;
     }
 
     .card-content {
@@ -2778,11 +2794,7 @@ body {
         line-height: 1.5 !important;
     }
 
-    /* Ensure proper spacing for cards on iOS */
-    .cards-container {
-        padding: 30px 0 50px !important;
-        margin: 0 -10px;
-    }
+    /* Note: .cards-container and .cards-track styling moved above to avoid duplication */
 
     /* Fix flip card animation on iOS */
     .flip-card {

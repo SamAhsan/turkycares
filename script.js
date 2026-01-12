@@ -104,7 +104,6 @@ const sliderNext = document.getElementById('sliderNext');
 
 if (cardsTrack && sliderPrev && sliderNext) {
     let currentIndex = 0;
-    const cardWidth = 320 + 32; // card width + gap
     const cards = document.querySelectorAll('.checkup-card');
     const totalCards = cards.length;
 
@@ -112,6 +111,21 @@ if (cardsTrack && sliderPrev && sliderNext) {
         if (window.innerWidth >= 1200) return 3;
         if (window.innerWidth >= 768) return 2;
         return 1;
+    }
+
+    function getCardWidth() {
+        // Get actual card width from DOM for accurate calculation
+        if (cards.length > 0) {
+            const cardElement = cards[0];
+            const cardStyle = window.getComputedStyle(cardElement);
+            const cardWidth = cardElement.offsetWidth;
+            const gap = parseFloat(cardStyle.marginLeft) + parseFloat(cardStyle.marginRight);
+            // Add gap from cards-track
+            const trackStyle = window.getComputedStyle(cardsTrack);
+            const trackGap = parseFloat(trackStyle.gap) || 32;
+            return cardWidth + trackGap;
+        }
+        return 320 + 32; // fallback
     }
 
     function updateSlider() {
@@ -123,6 +137,7 @@ if (cardsTrack && sliderPrev && sliderNext) {
             currentIndex = maxIndex;
         }
 
+        const cardWidth = getCardWidth();
         const offset = currentIndex * cardWidth;
         cardsTrack.style.transform = `translateX(-${offset}px)`;
 
