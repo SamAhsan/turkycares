@@ -2,6 +2,10 @@
 // PROFESSIONAL HEALTHCARE LANDING PAGE JS
 // ========================================
 
+// Detect iOS device
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
 // ========================================
 // HERO WORD ROTATION ANIMATION
 // ========================================
@@ -138,13 +142,23 @@ if (cardsTrack && sliderPrev && sliderNext) {
         const cardWidth = getCardWidth();
         const offset = currentIndex * cardWidth;
 
-        // Use translate3d for better performance on iOS
-        cardsTrack.style.transform = `translate3d(-${offset}px, 0, 0)`;
-        cardsTrack.style.webkitTransform = `translate3d(-${offset}px, 0, 0)`;
+        // Force repaint on iOS
+        if (isIOS) {
+            cardsTrack.style.display = 'none';
+            cardsTrack.offsetHeight; // trigger reflow
+            cardsTrack.style.display = 'flex';
+        }
+
+        // Use translate3d for better performance
+        const transformValue = `translate3d(-${offset}px, 0, 0)`;
+        cardsTrack.style.transform = transformValue;
+        cardsTrack.style.webkitTransform = transformValue;
 
         // Update button states
         sliderPrev.disabled = currentIndex === 0;
         sliderNext.disabled = currentIndex >= maxIndex;
+
+        console.log('Slider update:', { currentIndex, offset, cardWidth, isIOS });
     }
 
     sliderPrev.addEventListener('click', () => {
@@ -217,29 +231,91 @@ if (cardsTrack && sliderPrev && sliderNext) {
 // Auto-flip cards on mobile when they come into view
 const flipCards = document.querySelectorAll('.flip-card');
 
+// iOS-specific flip card handler
+function flipCardOnIOS(card, shouldFlip) {
+    if (shouldFlip) {
+        card.classList.add('flipped');
+        // Force style recalculation on iOS
+        card.style.transform = 'translateZ(0)';
+        void card.offsetHeight; // trigger reflow
+    } else {
+        card.classList.remove('flipped');
+        card.style.transform = 'translateZ(0)';
+        void card.offsetHeight; // trigger reflow
+    }
+    console.log('iOS flip:', card, shouldFlip);
+}
+
 const flipObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting && window.innerWidth <= 968) {
+            const cardIndex = Array.from(flipCards).indexOf(entry.target);
+            const delay = cardIndex * 200;
+
             // Add flipped class after a short delay for staggered effect
-            const delay = Array.from(flipCards).indexOf(entry.target) * 200;
             setTimeout(() => {
-                entry.target.classList.add('flipped');
+                if (isIOS) {
+                    flipCardOnIOS(entry.target, true);
+                } else {
+                    entry.target.classList.add('flipped');
+                }
             }, delay);
 
             // Remove flipped class after 4 seconds to show front again
             setTimeout(() => {
-                entry.target.classList.remove('flipped');
+                if (isIOS) {
+                    flipCardOnIOS(entry.target, false);
+                } else {
+                    entry.target.classList.remove('flipped');
+                }
             }, delay + 4000);
         }
     });
 }, {
-    threshold: 0.3,
+    threshold: isIOS ? 0.2 : 0.3,
     rootMargin: '0px'
 });
 
 flipCards.forEach(card => {
     flipObserver.observe(card);
 });
+
+// iOS fallback - also check on scroll
+if (isIOS && flipCards.length > 0) {
+    let flipCheckInterval = null;
+
+    function checkFlipCardsVisibility() {
+        flipCards.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom > 0;
+
+            if (isVisible && !card.classList.contains('flip-triggered')) {
+                card.classList.add('flip-triggered');
+                const delay = index * 200;
+
+                setTimeout(() => {
+                    flipCardOnIOS(card, true);
+                }, delay);
+
+                setTimeout(() => {
+                    flipCardOnIOS(card, false);
+                }, delay + 4000);
+            }
+        });
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!flipCheckInterval) {
+            flipCheckInterval = setTimeout(() => {
+                checkFlipCardsVisibility();
+                flipCheckInterval = null;
+            }, 100);
+        }
+    });
+
+    // Check on load
+    setTimeout(checkFlipCardsVisibility, 500);
+}
 
 // Tab switching for Why Turkey / Why Izmir
 const whyTabs = document.querySelectorAll('.why-tab');
