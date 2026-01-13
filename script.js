@@ -142,57 +142,28 @@ if (cardsTrack && sliderPrev && sliderNext) {
         const cardWidth = getCardWidth();
         const offset = currentIndex * cardWidth;
 
-        console.log('Slider update BEFORE:', {
+        console.log('Slider update:', {
             currentIndex,
             offset,
             cardWidth,
             isIOS,
             totalCards,
-            maxIndex,
-            currentTransform: cardsTrack.style.transform
+            maxIndex
         });
 
-        // iOS-specific aggressive fix
-        if (isIOS) {
-            // Remove transition temporarily
-            cardsTrack.style.transition = 'none';
-            cardsTrack.style.webkitTransition = 'none';
-
-            // Force immediate repaint
-            cardsTrack.offsetHeight;
-
-            // Apply transform
+        // Apply transform - same way for all devices
+        requestAnimationFrame(() => {
             cardsTrack.style.webkitTransform = `translate3d(-${offset}px, 0, 0)`;
             cardsTrack.style.transform = `translate3d(-${offset}px, 0, 0)`;
 
-            // Force another repaint
-            cardsTrack.offsetHeight;
-
-            // Re-enable transition
-            setTimeout(() => {
-                cardsTrack.style.transition = 'transform 0.4s ease-out';
-                cardsTrack.style.webkitTransition = '-webkit-transform 0.4s ease-out';
-            }, 10);
-        } else {
-            // Standard for Android/Desktop
-            const transformValue = `translate3d(-${offset}px, 0, 0)`;
-            cardsTrack.style.webkitTransform = transformValue;
-            cardsTrack.style.transform = transformValue;
-        }
-
-        // Force hardware acceleration
-        cardsTrack.style.webkitBackfaceVisibility = 'hidden';
-        cardsTrack.style.backfaceVisibility = 'hidden';
+            // Set transition
+            cardsTrack.style.webkitTransition = '-webkit-transform 0.5s ease-out';
+            cardsTrack.style.transition = 'transform 0.5s ease-out';
+        });
 
         // Update button states
         sliderPrev.disabled = currentIndex === 0;
         sliderNext.disabled = currentIndex >= maxIndex;
-
-        console.log('Slider update AFTER:', {
-            currentIndex,
-            offset,
-            newTransform: cardsTrack.style.transform
-        });
     }
 
     sliderPrev.addEventListener('click', () => {

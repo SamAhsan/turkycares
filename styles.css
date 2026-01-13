@@ -2742,15 +2742,14 @@ body {
     }
 
     .cards-track {
-        -webkit-transform: translate3d(0, 0, 0) !important;
-        transform: translate3d(0, 0, 0) !important;
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden !important;
+        -webkit-backface-visibility: hidden !important;
         padding: 0 7vw !important;
         gap: 1.5rem !important;
         display: flex !important;
         flex-wrap: nowrap !important;
-        /* Transition handled in JavaScript for better iOS control */
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 
     /* Make slider arrows visible and functional on iOS */
