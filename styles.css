@@ -2749,10 +2749,8 @@ body {
         padding: 0 7vw !important;
         gap: 1.5rem !important;
         display: flex !important;
-        -webkit-transition: -webkit-transform 0.4s ease-out !important;
-        transition: transform 0.4s ease-out !important;
-        will-change: transform;
         flex-wrap: nowrap !important;
+        /* Transition handled in JavaScript for better iOS control */
     }
 
     /* Make slider arrows visible and functional on iOS */
